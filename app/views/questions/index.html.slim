@@ -1,0 +1,18 @@
+h1 質問一覧
+= link_to '新規登録', new_question_path, class: 'btn btn-primary'
+
+.mb-3
+table.table.table-hover
+  thred.thred-default
+    tr
+      th= Question.human_attribute_name(:name)
+      th= Question.human_attribute_name(:created_at)
+      th
+  tbody
+    - @questions.each do |question|
+      tr
+        td= link_to task.name, task
+        td= question.created_at
+        td
+          = link_to '編集', edit_question_path(question), class: 'btn btn-primary mr-3'
+          = link_to '削除', task, method: :delete, data: { confirm: "タスク「#{question.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger'
