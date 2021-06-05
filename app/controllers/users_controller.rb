@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def index
+    @users = User.all
   end
 
   def new
@@ -9,13 +10,17 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to user_url(@user), notice: "ユーザー「#{@user.name}」を追加しました。"
+      session[:user_id] = @user.id
+      redirect_to users_path, notice: "ユーザー「#{@user.name}」を追加しました。"
     else
       render :new
     end
   end
 
   def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to users_url, notice: "ユーザー「#{@user.name}」を削除しました。"
   end
 
   private

@@ -1,2 +1,13 @@
-h1 Users#index
-p Find me in app/views/users/index.html.slim
+h1 ユーザー一覧
+
+.mb-3
+table.table.table-hover
+  thred.thred-default
+
+  tbody
+    - @users.each do |user|
+      tr
+        td= user.name
+        td= user.created_at
+        td
+          = link_to '削除', user, method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger'

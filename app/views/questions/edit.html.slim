@@ -1,2 +1,10 @@
-h1 Questions#edit
-p Find me in app/views/questions/edit.html.slim
+h1 質問編集
+
+= form_with model: [@question], local: true do |f|
+  .form-group
+    = f.label :title, '質問タイトル'
+    = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :body, '質問内容'
+    = f.text_area :body, class: 'form-control'
+  = f.submit '投稿', class: 'btn btn-primary'

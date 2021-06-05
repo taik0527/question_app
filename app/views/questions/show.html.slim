@@ -1,2 +1,30 @@
-h1 Questions#show
-p Find me in app/views/questions/show.html.slim
+h1 質問詳細
+
+table.table.table-hover
+  tbody
+    tr
+      th= Question.human_attribute_name(:id)
+      td= @question.id
+    tr
+      th= Question.human_attribute_name(:title)
+      td= @question.title
+    tr
+      th= Question.human_attribute_name(:body)
+      td= simple_format(h(@question.body),{}, sanitize: false, wrapper_tag: "div")
+    tr
+      th= Question.human_attribute_name(:created_at)
+      td= @question.created_at
+    tr
+      th= Question.human_attribute_name(:updated_at)
+      td= @question.updated_at
+
+- if current_user.id == @question.user_id
+  = link_to '編集', edit_question_path, class: 'btn btn-primary mr-3'
+  = link_to '削除', @question, method: :delete, data: { confirm: "質問「#{@question.title}」を削除します。よろしいですか？"}, class: 'btn btn-danger'
+
+- unless current_user.id == @question.user_id
+  = form_with model: [@question, @answer], local: true do |f|
+    .form-group
+      = f.label :body, '回答内容'
+      = f.text_area :body, class: 'form-control'
+    = f.submit '回答する', class: 'btn btn-primary'
