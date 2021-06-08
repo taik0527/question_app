@@ -1,15 +1,13 @@
 class QuestionsController < ApplicationController
   def index
-    @q = Question.ransack
-    @questions = @q.result(distinct: true).recent
+    @q = Question.ransack(params[:q])
+    @questions = @q.result(distinct: true).page(params[:page])
   end
 
   def solved
-
   end
 
   def unsolved
-
   end
 
   def new
@@ -18,7 +16,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.new(question_params)
-    if @question.save!
+    if @question.save
       redirect_to question_url(@question), notice: "投稿「#{@question.title}」を追加しました。"
     else
       render :new
@@ -28,6 +26,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @answer = Answer.new
+    @answers = Answer.where(question_id: params[:id]).order(created_at: "DESC")
   end
 
   def edit

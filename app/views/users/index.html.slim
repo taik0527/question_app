@@ -9,5 +9,3 @@ table.table.table-hover
       tr
         td= user.name
         td= user.created_at
-        td
-          = link_to '削除', user, method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger'

@@ -28,3 +28,16 @@ table.table.table-hover
       = f.label :body, '回答内容'
       = f.text_area :body, class: 'form-control'
     = f.submit '回答する', class: 'btn btn-primary'
+
+.mb-3
+table.table.table-hover
+  thred.thred-default
+    tr
+      th= Question.human_attribute_name(:name)
+      th= Question.human_attribute_name(:created_at)
+      th
+  tbody
+    - @answers.each do |answer|
+      tr
+        td= answer.body
+        td= answer.created_at

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'users/index'
+    get 'questions/index'
+  end
   root to: 'users#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
