@@ -3,20 +3,14 @@ h1 質問詳細
 table.table.table-hover
   tbody
     tr
-      th= Question.human_attribute_name(:id)
-      td= @question.id
+      th= User.human_attribute_name(:name)
+      td= @user.name
     tr
       th= Question.human_attribute_name(:title)
       td= @question.title
     tr
       th= Question.human_attribute_name(:body)
       td= simple_format(h(@question.body),{}, sanitize: false, wrapper_tag: "div")
-    tr
-      th= Question.human_attribute_name(:created_at)
-      td= @question.created_at
-    tr
-      th= Question.human_attribute_name(:updated_at)
-      td= @question.updated_at
 
 - if current_user.id == @question.user_id
   = link_to '編集', edit_question_path, class: 'btn btn-primary mr-3'
@@ -32,10 +26,6 @@ table.table.table-hover
 .mb-3
 table.table.table-hover
   thred.thred-default
-    tr
-      th= Question.human_attribute_name(:name)
-      th= Question.human_attribute_name(:created_at)
-      th
   tbody
     - @answers.each do |answer|
       tr
