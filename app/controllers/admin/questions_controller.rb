@@ -1,5 +1,6 @@
 class Admin::QuestionsController < ApplicationController
   before_action :admin_required
+  
   def index
     @q = Question.ransack(params[:q])
     @questions = @q.result(distinct: true).page(params[:page])

@@ -19,6 +19,8 @@ class SessionsController < ApplicationController
     redirect_to  login_url, notice: "ログアウトしました。"
   end
 
+  private
+
   def session_params
     params.require(:session).permit(:email, :password)
   end

@@ -23,7 +23,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
-      QuestionMailer.creation_email(@question).deliver_now
+      QuestionMailer.send_mail_users(@question).deliver
       redirect_to question_url(@question), notice: "投稿「#{@question.title}」を追加しました。"
     else
       render :new

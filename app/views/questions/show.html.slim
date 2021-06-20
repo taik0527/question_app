@@ -3,8 +3,8 @@ h1 質問詳細
 table.table.table-hover
   tbody
     tr
-      th= User.human_attribute_name(:name)
-      td= @user.name
+      th= User.human_attribute_name(:image)
+      td= image_tag @question.user.image, width: '40', height: '40', class: 'img-responsive' if @question.user.image.attached?
     tr
       th= Question.human_attribute_name(:title)
       td= @question.title
@@ -29,5 +29,5 @@ table.table.table-hover
   tbody
     - @answers.each do |answer|
       tr
+        td= image_tag answer.user.image, width: '40', height: '40', class: 'img-responsive' if answer.user.image.attached?
         td= answer.body
-        td= answer.created_at
