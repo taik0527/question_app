@@ -1,3 +1,9 @@
-|以下の質問を作成しました
+| 以下の質問を作成しました
 
-質問が作成されました
+ul
+  li
+    | 名称：
+    = @question.title
+  li
+    | 詳しい説明：
+    simple_format(@question.body)
