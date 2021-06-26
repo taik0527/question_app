@@ -1,6 +1,6 @@
 class AnswerMailer < ApplicationMailer
-
   def send_mail(user, answer)
+    @answer = answer
     mail(subject: '回答作成完了メール' ,to: user.email, from: "questionapp@example.com")
   end
 

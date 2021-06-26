@@ -1,5 +1,4 @@
 class AnswersController < ApplicationController
-
   def create
     @answer = current_user.answers.new(answer_params.merge(question_id: params[:question_id]))
     @question = Question.find(params[:question_id])

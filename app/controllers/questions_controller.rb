@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_action :set_question, {only:[:show, :edit, :update, :destroy]}
+
   def index
     @q = Question.ransack(params[:q])
     @questions = @q.result(distinct: true).page(params[:page])
@@ -31,24 +33,20 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
     @user = User.find(@question.user_id)
     @answer = Answer.new
     @answers = Answer.where(question_id: params[:id]).order(created_at: "DESC")
   end
 
   def edit
-    @question = current_user.questions.find(params[:id])
   end
 
   def update
-    @question = current_user.questions.find(params[:id])
     @question.update!(question_params)
     redirect_to questions_url, notice: "質問「#{@question.title}」を更新しました。"
   end
 
   def destroy
-    @question = current_user.questions.find(params[:id])
     @question.destroy
     redirect_to questions_url, notice: "質問「#{@question.title}」を削除しました。"
   end
@@ -57,5 +55,9 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def set_question
+    @question = Question.find(params[:id])
   end
 end
