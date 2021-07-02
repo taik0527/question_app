@@ -1,19 +1,7 @@
 class AnswerMailer < ApplicationMailer
-  def send_mail(user, answer)
-    @answer = answer
-    mail(subject: '回答作成完了メール' ,to: user.email, from: "questionapp@example.com")
-  end
-
-  def self.send_mail_user(answer, question)
-    user = User.find(question.user_id)
-    AnswerMailer.send_mail(user, answer).deliver_now
-    answers = Answer.where(question_id: answer.question_id)
-    user_ids = answers.pluck(:user_id).uniq!
-    @users = User.where(id: user_ids)
-    @users.each do |user|
-      unless answer.user_id == user.id
-        AnswerMailer.send_mail(user, answer).deliver_now
-      end
-    end
+  def answer_created
+    @user = params[:user]
+    @question = params[:question]
+    mail(to: @user.email, subject: 'あなたが回答したことのある質問に新しい回答がつきました')
   end
 end

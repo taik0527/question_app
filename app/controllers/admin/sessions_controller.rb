@@ -9,7 +9,7 @@ class Admin::SessionsController < ApplicationController
     if user&.authenticate(session_params[:password]) && user.admin
       session[:user_id] = user.id
       session[:user_admin] = user.id
-      redirect_to  admin_users_path, notice: "ログインしました"
+      redirect_to  admin_questions_path, notice: "ログインしました"
     else
       render :new
     end

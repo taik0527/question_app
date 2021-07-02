@@ -1,8 +1,8 @@
 h1 質問一覧
 
 nav-item= link_to '全て', questions_path, class: 'btn btn-primary'
-nav-item= link_to '未解決', questions_unsolved_path, class: 'btn btn-primary'
-nav-item= link_to '解決済み', questions_solved_path, class: 'btn btn-primary'
+nav-item= link_to '未解決', unsolved_questions_path, class: 'btn btn-primary'
+nav-item= link_to '解決済み', solved_questions_path, class: 'btn btn-primary'
 
 = search_form_for @q, url: questions_path, class: 'mb-5' do |f|
   .form-group.row

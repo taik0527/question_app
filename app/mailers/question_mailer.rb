@@ -1,15 +1,13 @@
 class QuestionMailer < ApplicationMailer
-  def send_mail(user, question)
-    @question = question
-    mail(subject: '質問作成完了メール' ,to: user.email, from: "questionapp@example.com")
+  def question_created
+    @user = params[:user]
+    @question = params[:question]
+    mail(to: @user.email, subject: '質問が投稿されました')
   end
 
-  def send_mail_users(question)
-    @users = User.all
-    @users.each do |user|
-      unless question.user_id == user.id
-        QuestionMailer.send_mail(user, question).deliver_now
-      end
-    end
+  def answer_created
+    @user = params[:user]
+    @question = params[:question]
+    mail(to: @user.email, subject: 'あなたの質問に回答がありました')
   end
 end
