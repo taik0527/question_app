@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title
+      | QuestionApp
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+
+    .app-title.navbar.navbar-expand-md.navbar-light.bg-light
+      .navbar-brand QuestionApp
+
+      ul.navbar-nav.ml-auto
+        - unless session[:user_admin]
+          - if current_user
+            li.nav-item= image_tag current_user.image, width: '40', height: '40', class: 'img-responsive' if current_user.image.attached?
+            li.nav-item= link_to '質問一覧', questions_path, class: 'nav-link'
+            li.nav-item= link_to 'ユーザー一覧', users_path, class: 'nav-link'
+            li.nav-item= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
+          - else
+            li.nav-item= link_to 'ログイン', login_path, class: 'nav-link'
+            li.nav-item= link_to '新規登録', new_user_path, class: 'nav-link'
+        - else session[:user_admin]
+            li.nav-item= image_tag current_user.image, width: '40', height: '40', class: 'img-responsive' if current_user.image.attached?
+            li.nav-item= link_to '質問一覧（管理者画面）', admin_questions_path, class: 'nav-link'
+            li.nav-item= link_to 'ユーザー一覧（管理者画面）', admin_users_path, class: 'nav-link'
+            li.nav-item= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
+    .container
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice
+    = yield

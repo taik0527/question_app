@@ -1,0 +1,31 @@
+h1 質問一覧
+
+nav-item= link_to '全て', questions_path, class: 'btn btn-primary'
+nav-item= link_to '未解決', unsolved_questions_path, class: 'btn btn-primary'
+nav-item= link_to '解決済み', solved_questions_path, class: 'btn btn-primary'
+
+= search_form_for @q, url: questions_path, class: 'mb-5' do |f|
+  .form-group.row
+    = f.label :title_cont, '検索機能', class: 'col-form-label'
+    .col-sm-10
+      = f.search_field :title_cont, class: 'form-control'
+  .form-group
+    = f.submit '検索', class: 'btn btn-outline-primary'
+
+= link_to '新規投稿', new_question_path, class: 'btn btn-primary'
+
+.mb-3
+  = paginate @questions
+  = page_entries_info @questions
+table.table.table-hover
+  thred.thred-default
+    tr
+      th= Question.human_attribute_name(:image)
+      th= sort_link(@q, :title)
+      th= Question.human_attribute_name(:created_at)
+  tbody
+    - @questions.each do |question|
+      tr
+        td= image_tag question.user.image, width: '40', height: '40', class: 'img-responsive' if question.user.image.attached?
+        td= link_to question.title, question
+        td= question.created_at

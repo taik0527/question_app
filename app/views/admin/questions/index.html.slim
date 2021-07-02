@@ -1,0 +1,25 @@
+h1 質問一覧(管理者画面)
+
+= search_form_for @q, url: admin_questions_path, class: 'mb-5' do |f|
+  .form-group.row
+    = f.label :title_cont, '検索機能', class: 'col-form-label'
+    .col-sm-10
+      = f.search_field :title_cont, class: 'form-control'
+  .form-group
+    = f.submit '検索', class: 'btn btn-outline-primary'
+
+.mb-3
+  = paginate @questions
+  = page_entries_info @questions
+table.table.table-hover
+  thred.thred-default
+    tr
+      th= Question.human_attribute_name(:image)
+      th= sort_link(@q, :title)
+      th
+  tbody
+    - @questions.each do |question|
+      tr
+        td= image_tag question.user.image, width: '40', height: '40', class: 'img-responsive' if question.user.image.attached?
+        td= question.title
+        td= link_to '削除', admin_url(question), method: :delete, data: { confirm: "質問「#{question.title}」を削除します。よろしいですか？"}, class: 'btn btn-danger'

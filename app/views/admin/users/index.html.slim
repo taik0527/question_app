@@ -1,0 +1,26 @@
+h1 ユーザー一覧(管理者画面)
+
+= search_form_for @q, url: admin_users_path, class: 'mb-5' do |f|
+  .form-group.row
+    = f.label :name_cont, '検索機能', class: 'col-form-label'
+    .col-sm-10
+      = f.search_field :name_cont, class: 'form-control'
+  .form-group
+    = f.submit '検索', class: 'btn btn-outline-primary'
+
+.mb-3
+  = paginate @users
+  = page_entries_info @users
+table.table.table-hover
+  thred.thred-default
+    tr
+      th= User.human_attribute_name(:image)
+      th= sort_link(@q, :user_name)
+      th
+  tbody
+    - @users.each do |user|
+      tr
+        td= image_tag user.image, width: '40', height: '40', class: 'img-responsive' if user.image.attached?
+        td= user.name
+        td
+          = link_to '削除', admin_url(user), method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger'
